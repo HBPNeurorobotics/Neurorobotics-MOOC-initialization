@@ -43,9 +43,7 @@ const router = new VueRouter({
       component: TermAndConditions,
       props: true,
       name: 'termsandconditions'
-    },
-    //===================== Default route ==================================
-    { path: '*', redirect: '/mooc/' }
+    }
   ],
   base: '/usecases/',
   scrollBehavior () {
