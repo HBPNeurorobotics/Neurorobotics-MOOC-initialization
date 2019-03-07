@@ -1,5 +1,5 @@
 # Neurorobotics-MOOC-initialization
-This repository holds a web application designed to be integrated as an HBP Collab application. It allows you select a Neurorobotics MOOC and to run its exercises in Jupyter notebook hosted by a Collab. 
+This repository holds a web application designed to be integrated as an HBP Collab application. It allows you select to a Neurorobotics MOOC and to run its exercises in a Jupyter notebook hosted by one of your Collabs. 
 The source code is a slim replica of the [Brain Simulation Platform's Usecase Wizard](https://github.com/antonelepfl/usecases) by Stefano Antonel.
 
 All the titles, images, descriptions, files, etc are described in [usecases.json](/src/assets/config_files/usecases.json)

@@ -4,7 +4,7 @@ import { JSO } from 'jso';
 
 import store from './store';
 
-const clientId = '74b1a180-3646-45ac-b53c-ebd905cec418';
+const clientId = 'eb1362ce-0f30-4a38-81f1-cb289bd97f1f';
 const authUrl = 'https://services.humanbrainproject.eu/oidc/authorize';
 
 const client = new JSO({
