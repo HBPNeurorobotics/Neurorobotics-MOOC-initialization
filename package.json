@@ -1,20 +1,16 @@
 {
-  "name": "bbp-usecase-wizard",
-  "description": "Blue Brain Usecase Wizard",
-  "version": "1.1.0",
+  "name": "neurorobotics-mooc-initialization",
+  "description": "Exercise wizard for the Neurorobotics MOOC",
+  "version": "1.0.1",
   "private": true,
   "author": "Antonel Stefano <stefano.antonel@epfl.ch>",
   "contributors": [
-    "michael.gevaert@epfl.ch",
-    "stefano.antonel@epfl.ch",
-    "jean-denis.courcol@epfl.ch",
-    "michele.migliore@yale.edu"
+    "luc.guyot@epfl.ch"
   ],
   "license": "GPL",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antonelepfl/usecases/releases",
-    "issuesurl": "https://github.com/antonelepfl/usecases/issues"
+    "url": "https://github.com/HBPNeurorobotics/Neurorobotics-MOOC-initialization"
   },
   "scripts": {
     "dev": "vue-cli-service serve",
