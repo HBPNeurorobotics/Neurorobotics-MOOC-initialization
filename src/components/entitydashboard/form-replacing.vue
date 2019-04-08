@@ -51,11 +51,9 @@
     },
     methods: {
       collabSelected: function (collab) {
-        // this.sendStatistics(collab.id, this.uc_name, category, this.folder_name, false);
         this.createItem(collab);
       },
       createNewCollab (collab) {
-        // this.sendStatistics(collab.id, this.uc_name, category, this.folder_name, true);
         this.createItem(collab);
       },
       createItem (collab) {

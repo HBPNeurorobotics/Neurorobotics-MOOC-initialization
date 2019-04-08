@@ -370,7 +370,7 @@ export default {
     },
     replaceExistsDialog (nav, filesChildren) {
       /* find the same name of the existing navs and new files
-       * if finds a popup will apear to the user for replace or generate new files
+       * if finds a popup will appear to the user for replacing or generating new files
       **/
       let promise = null
       let found = null
@@ -567,35 +567,6 @@ export default {
         })
       })
     },
-    sendStatistics (collabId, ucName, category, fullModelName, isNew) {
-      if (store.state.devWebsite) {return}
-      let that = this
-      function searchPath (ucName) {
-        for (let i in that.usecases) {
-          for (let j in that.usecases[i]) {
-            let title = that.usecases[i][j].title
-            let titleCompressed = title.replace(/ /g, '').toLowerCase()
-            if (titleCompressed === ucName) {
-              return title
-            }
-          }
-        }
-        return ucName
-      }
-      let fullUCName = searchPath(ucName)
-      let userEntry = 'entry.1933333390'
-      /* eslint no-undef: 0 */
-      let formData = new URLSearchParams()
-      let url = 'https://docs.google.com/forms/d/e/1FAIpQLSc6u9NerFcvI_4Duh1N4LyV48pDi8Mjq0xYGWJzOPBaJ9FjWw/formResponse'
-      let collabCreated = (isNew) ? 'Create' : 'Add'
-      formData.append('entry.724323063', collabCreated)
-      formData.append('entry.1219332324', fullUCName)
-      formData.append('entry.2088231351', fullModelName)
-      formData.append('entry.748800890', collabId)
-      formData.append('entry.2065854000', category)
-      console.debug('Send usage statistic to form')
-      this.sendToForm(formData, url, userEntry)
-    },
     sendToForm (formData, url, userEntry) {
       let that = this
 
@@ -644,7 +615,7 @@ export default {
         }, reject)
       })
     },
-    addCollabMemeber (collabId, userId) {
+    addCollabMember (collabId, userId) {
       let that = this
       return new Promise(function (resolve, reject) {
         let url = COLLAB_API + 'collab/' + collabId + '/team/'

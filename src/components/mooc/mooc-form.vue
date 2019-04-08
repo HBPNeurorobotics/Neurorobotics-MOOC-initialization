@@ -20,7 +20,7 @@
 
       <md-input-container>
         <label>Collab Name</label>
-        <md-input placeholder="Mooc" v-model.lazy="searchText"></md-input>
+        <md-input placeholder="Type the name of an existing Collab" v-model.lazy="searchText"></md-input>
       </md-input-container>
       <div v-show="!isLoadingLocal" class="collabs-results-container">
         <div v-for="collab in collabResults" :key="collab.title" class="collab-result" >
@@ -55,10 +55,11 @@
         collabCreationProgress: 0,
         fullCollabName: '',
         timeoutId: 0,
-        weekNumber: null
+        weekNumber: null,
+        moocFullWeeks: this.$route.params.moocFullWeeks
       }
     },
-    props: ['uc_name', 'week'],
+    props: ['uc_name'],
     mixins: [mooc, collabAuthentication], // use common functions
     methods: {
       async createNewCollab () {
@@ -69,12 +70,13 @@
         this.collabCreationProgress = 10
         try {
           let collab = await this.createMoocCollab(isPrivate, this.fullCollabName)
-          let prettyWeek = 'Week ' + this.weekNumber
-          var category = this.$route.path.split('/')[1]
-          await that.createCoursesMooc(collab, that.uc_name, this.week)
-          that.sendStatistics(collab.id, that.uc_name, category, prettyWeek, true)
+          for (const week of this.moocFullWeeks) {
+            await that.createCoursesMooc(collab, week)
+          }
           that.collabCreationProgress = 100
           that.isLoading = false
+          that.redirectToCollab(collab.id, that.navitemId)
+          await setTimeout(1500) // if it does not redirect stop loading
         } catch (error) {
           if (error === 'collab with this title already exists.') {
             that.errorMessage = 'Please try again'
@@ -90,11 +92,11 @@
         that.isLoadingLocal = true
         this.collabCreationProgress = 10
         try {
-          let prettyWeek = 'Week ' + this.weekNumber
-          var category = this.$route.path.split('/')[1]
-          await this.addMoocExistingCollab(collab, this.uc_name, this.week)
-          that.sendStatistics(collab.id, that.uc_name, category, prettyWeek, false)
+          for (const week of this.moocFullWeeks) {
+            await that.addMoocExistingCollab(collab, week)
+          }
           that.isLoadingLocal = false
+          that.redirectToCollab(collab.id, that.navitemId)
         } catch (error) {
           that.errorMessage = error
           that.isLoadingLocal = false
@@ -104,14 +106,13 @@
     mounted () {
       let that = this
       this.$nextTick(function () { // waits until token is saved in mixins headers
-        this.weekNumber = this.week.match(/\d+/)[0];
-        that.updateFullCollabName(this.searchText, this.moocName, this.weekNumber)
+        that.updateFullCollabName(this.searchText, this.moocName)
       })
     },
     watch: {
       'searchText' (newVal) {
         var that = this
-        this.updateFullCollabName(this.searchText, this.moocName, this.weekNumber)
+        this.updateFullCollabName(this.searchText, this.moocName)
         clearTimeout(this.timeoutId)
         if (newVal === '') {
           that.collabResults = []

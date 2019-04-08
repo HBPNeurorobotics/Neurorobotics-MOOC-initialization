@@ -7,9 +7,15 @@
         </a>
       </div>
       <div class="content-uc">
-        <div v-for="uc in weeks" :key="uc.title" v-bind:class="{ 'disabled-container': uc.disabled }" v-on:click="selected(uc)">
+        <p>
+        <md-button class="md-raised md-primary"
+          v-on:click="selected()">
+          Create your Collab
+        </md-button>
+        </p>
+        <div v-for="uc in weeks" :key="uc.title" v-bind:class="{ 'disabled-container': uc.disabled }">
            <div v-if="uc.disabled" class="disabled-tag">Coming Soon</div>
-           <md-whiteframe md-elevation="2" v-bind:class="{ 'item-sections': true, 'disabled-item': uc.disabled }">
+           <md-whiteframe md-elevation="1" v-bind:class="{ 'item-sections-no-hover': true, 'disabled-item': uc.disabled }">
               <uc-item v-bind:uc="uc" v-bind:categories="categories"></uc-item>
            </md-whiteframe>
         </div>
@@ -38,20 +44,15 @@
       },
       mixins: [collabAuthentication, mooc],
       methods: {
-         selected (uc) {
-            if (!uc.disabled) {
-              var weekName = uc.title.toLowerCase().replace(/\s/g, '')
-
+         selected () {
               this.$router.push({
-                name: uc.next,
+                name: "mooc_form",
                 params: {
-                  'week': weekName,
                   'moocFullWeeks': this.weeks,
-                  'moocFullName': this.moocInfo.title
+                  'moocFullName': this.moocInfo.title,
                 },
                 query: this.$route.query
               })
-            }
          },
          prettyfy (name) {
             return name.split('_').map(function (word) {

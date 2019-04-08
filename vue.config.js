@@ -10,6 +10,7 @@ console.log('Branch:', process.env.GIT_BRANCH)
 module.exports = {
   baseUrl: process.env.BASE_URL,
   configureWebpack: {
+    devtool: 'source-map',
     module: {
       rules: [
         { test: /\.md$/, use: ["html-loader", "markdown-loader"] }
