@@ -27,25 +27,24 @@ export default {
         await that.getUserInfo()
         that.collabCreationProgress = 10
         let collab = await that.createCollab(fullCollabName, isPrivate)
-        that.addCollabMemeber(collab.id, '303700')
+        that.addCollabMember(collab.id, '303700') // Add the mooc epflbsp user
         return collab
       } catch (e) { return Promise.reject(e) }
     },
-    addMoocExistingCollab (collab, uc, week) {
+    addMoocExistingCollab (collab, week) {
       try {
-        return this.createCoursesMooc(collab, uc, week)
+        return this.createCoursesMooc(collab, week)
       } catch (e) { return Promise.reject(e) }
     },
-    async createCoursesMooc (collab, uc, week) { // cretes mooc -> weeks
+    async createCoursesMooc (collab, moocWeek) { // creates mooc -> weeks
       var that = this
-      this.moocWeek = await this.getWeekInfo(uc, week)
       let coursesPromises = []
       try {
         console.debug('before getNavElement')
         await that.getNavElement(collab.id)
-        if (that.moocWeek && that.moocWeek.files) {
-          let isReplace = await that.replaceExistsDialog(store.state.allNavItems, that.moocWeek.files)
-          this.moocWeek.files.forEach((file) => {
+        if (moocWeek && moocWeek.files) {
+          let isReplace = await that.replaceExistsDialog(store.state.allNavItems, moocWeek.files)
+            moocWeek.files.forEach((file) => {
             if (!isReplace) { // no replace. generate new navitem and new file
               throw String('abort and redirect')
             }
@@ -53,20 +52,17 @@ export default {
             coursesPromises.push(creat)
           })
           let elements = await Promise.all(coursesPromises)
-          let emptyNavItemsId = await that.generateNavItems(that.moocWeek.files, elements)
+          let emptyNavItemsId = await that.generateNavItems(moocWeek.files, elements)
           let prom = []
           for (let item in emptyNavItemsId) {
             prom.push(that.copyContentToNav(emptyNavItemsId[item]))
           }
           await Promise.all(prom)// populate navitem parallel
           that.collabCreationProgress = that.collabCreationProgress + 5
-
-          that.redirectToCollab(collab.id, that.navitemId)
-          await setTimeout(1500) // if it does not redirect stop loading
           return
         }
       } catch (e) {
-        that.abortAndRedirect(collab, that.moocWeek, e)
+        that.abortAndRedirect(collab, moocWeek, e)
       }
     },
     async createItemInExistingCollab (collab, item, replaceObj) { // creates weeks -> files. Modified.
@@ -146,11 +142,12 @@ export default {
         }
       }
     },
-    async updateFullCollabName (searchText, moocName, week) {
+    async updateFullCollabName (searchText, moocName) {
       try {
         let user = await this.getUserInfo()
         let d = new Date().toLocaleString()
-        this.fullCollabName = moocName + ' - Week ' + week + ' - ' + user.displayName + ' ' + d
+        const typedText = searchText || ''
+        this.fullCollabName = `${typedText}  ${moocName} - ${user.displayName} - ${d}`
       } catch (e) { return Promise.reject(e) }
     },
     findEntryInStructure (unsortedCourses, entryName) {
