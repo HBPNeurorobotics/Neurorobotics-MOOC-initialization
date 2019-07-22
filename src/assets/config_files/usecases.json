@@ -3,11 +3,11 @@
     "mooc": [
       {
         "title": "Neurorobotics MOOC: SOM and SARSA algorithms applied to robot navigation",
-        "description": "Exercises for the edX Neurorobotics MOOC ",
+        "description": "Mini-projects of the edX Neurorobotics MOOC ",
         "experience": ["all"],
         "disabled": false,
         "picture": {
-          "src": "https://raw.githubusercontent.com/HBPNeurorobotics/EPFLx-RoboX-Neurorobotics/master/Neurorobotics_MOOC_initialization/thumbnails/exercise3.gif"
+          "src": "https://raw.githubusercontent.com/HBPNeurorobotics/EPFLx-RoboX-Neurorobotics/master/Neurorobotics_MOOC_initialization/thumbnails/miniproject2.gif"
         },
         "next": "weeks_container",
         "config_url": "https://raw.githubusercontent.com/HBPNeurorobotics/EPFLx-RoboX-Neurorobotics/master/Neurorobotics_MOOC_initialization/weeks_config.json",
